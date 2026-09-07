@@ -16,21 +16,23 @@ Then open http://localhost:8000
 
 ## Adding a new video
 
-1. Upload the video to YouTube and copy its ID — the part after `watch?v=` in the URL.
-   For example, in `https://www.youtube.com/watch?v=ceekdJdtSJM` the ID is `ceekdJdtSJM`.
-2. Open `index.html` and find the `const videos = [` block near the bottom.
-3. Copy an existing entry and edit it:
+Nothing to do — just upload to YouTube. A GitHub Action
+(`.github/workflows/update-videos.yml`) runs daily, pulls the channel's RSS
+feed, and rebuilds `videos.json`. When it finds a new upload it commits the
+change and GitHub Pages redeploys automatically.
 
-```js
-{
-  id: "NEW_VIDEO_ID",
-  title: "Video title here",
-  description: "One-line description shown on the card."
-},
+Don't want to wait for the daily run? Trigger it manually from the repo's
+**Actions** tab → "Update videos from YouTube" → **Run workflow**, or run
+locally:
+
+```bash
+python scripts/update_videos.py
+git add videos.json && git commit -m "Update videos" && git push
 ```
 
-Newest-first is a nice convention — put new entries at the top of the list.
-The thumbnail, click-to-play embed, and YouTube link are generated automatically.
+Card descriptions use the first line of each video's YouTube description, so
+lead with a good sentence there. Titles, thumbnails, and embeds all come from
+the video itself.
 
 ## Hosting
 

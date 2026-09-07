@@ -236,20 +236,21 @@
 </footer>
 
 <script>
-  // ── Add new videos here ──────────────────────────────────────
-  // Just copy a block and change the id (from the YouTube URL:
-  // youtube.com/watch?v=THIS_PART), title, and description.
-  const videos = [
+  // The video list lives in videos.json, which a GitHub Action rebuilds
+  // daily from the channel's YouTube feed — new uploads appear on their
+  // own. This array is only the fallback if videos.json can't be loaded
+  // (e.g. opening index.html directly from disk).
+  const fallbackVideos = [
     {
       id: "ceekdJdtSJM",
       title: "Rain Sounds for Sleep 🌧️ 3 Hours of Calm Ambient Music | 432Hz Deep Relaxation & Study",
       description: "3 continuous hours of gentle rain and warm ambient tones, tuned to 432Hz. Perfect for deep sleep, meditation, or studying."
     }
   ];
-  // ─────────────────────────────────────────────────────────────
 
   const grid = document.getElementById("video-grid");
 
+  function render(videos) {
   videos.forEach(v => {
     const card = document.createElement("article");
     card.className = "card";
@@ -267,6 +268,12 @@
       </div>`;
     grid.appendChild(card);
   });
+  }
+
+  fetch("videos.json")
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(render)
+    .catch(() => render(fallbackVideos));
 
   // Thumbnails load instantly; the YouTube player is only embedded on click.
   function play(el) {
