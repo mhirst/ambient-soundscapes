@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ambient Soundscapes</title>
+<meta name="description" content="Ambient music and soundscapes for sleep, study, and deep relaxation. Rain sounds, 432Hz tuning, and slow evolving pads.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23e8dcc0'/></svg>">
+<style>
+  :root {
+    --night-deep: #0a1420;
+    --night: #101e30;
+    --night-mid: #1a2d45;
+    --ridge-1: #24405e;
+    --ridge-2: #33547a;
+    --ridge-3: #4a6d96;
+    --mist: #7d9cbf;
+    --moon: #e8dcc0;
+    --text: #d5e0ec;
+    --text-dim: #8aa2bc;
+    --card: #142438;
+    --card-edge: #233a52;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--night-deep);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0d1a2b 0%, #16283f 55%, #1e3450 100%);
+    text-align: center;
+    padding: 5.5rem 1.5rem 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 24px rgba(10, 20, 32, 0.8);
+  }
+
+  .hero p.tagline {
+    margin: 0.75rem auto 1.5rem;
+    max-width: 34rem;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+  }
+
+  .btn-subscribe {
+    display: inline-block;
+    margin-bottom: 3rem;
+    padding: 0.65rem 1.6rem;
+    border-radius: 999px;
+    background: var(--moon);
+    color: #1a2333;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 0 32px rgba(232, 220, 192, 0.25);
+  }
+  .btn-subscribe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 44px rgba(232, 220, 192, 0.4);
+  }
+
+  .hero svg.scene {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: -1rem;
+  }
+
+  /* ---------- Main ---------- */
+  main {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 2rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--ridge-1), transparent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid #233a52;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  }
+
+  .player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--night);
+    cursor: pointer;
+  }
+  .player img, .player iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+  .player .play-badge {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 20, 32, 0.25);
+    transition: background 0.2s ease;
+  }
+  .player:hover .play-badge { background: rgba(10, 20, 32, 0.05); }
+  .player .play-badge span {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(16, 30, 48, 0.85);
+    border: 1.5px solid rgba(232, 220, 192, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .player .play-badge svg { margin-left: 4px; }
+
+  .card-body { padding: 1.1rem 1.25rem 1.3rem; }
+  .card-body h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 0.45rem;
+  }
+  .card-body p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+  .card-body a.yt-link {
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    color: var(--mist);
+    text-decoration: none;
+  }
+  .card-body a.yt-link:hover { color: var(--moon); }
+
+  /* ---------- About ---------- */
+  .about {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid #233a52;
+    border-radius: 14px;
+    max-width: 46rem;
+  }
+  .about h2 { font-size: 1.2rem; margin-bottom: 0.7rem; }
+  .about p { color: var(--text-dim); font-size: 0.95rem; }
+
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--mist); text-decoration: none; }
+  footer a:hover { color: var(--moon); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Ambient Soundscapes</h1>
+  <p class="tagline">Slow, evolving ambient music for sleep, study, and deep relaxation. Rain, moonlight, and 432Hz calm.</p>
+  <a class="btn-subscribe" href="https://www.youtube.com/@ambntsnd?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+
+  <!-- Paper-cut night scene -->
+  <svg class="scene" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <circle cx="1180" cy="70" r="55" fill="#e8dcc0" opacity="0.95"/>
+    <circle cx="1180" cy="70" r="80" fill="#e8dcc0" opacity="0.12"/>
+    <path d="M0 190 L160 120 L300 185 L470 95 L640 190 L820 130 L1000 195 L1200 140 L1440 200 L1440 300 L0 300 Z" fill="#33547a"/>
+    <path d="M0 225 L200 165 L390 230 L580 155 L790 235 L980 175 L1180 240 L1440 185 L1440 300 L0 300 Z" fill="#24405e"/>
+    <path d="M0 262 L260 215 L500 268 L760 210 L1020 270 L1280 225 L1440 260 L1440 300 L0 300 Z" fill="#16283f"/>
+    <rect x="0" y="288" width="1440" height="12" fill="#101e30"/>
+    <ellipse cx="1180" cy="293" rx="70" ry="3" fill="#e8dcc0" opacity="0.25"/>
+    <ellipse cx="1180" cy="297" rx="45" ry="2" fill="#e8dcc0" opacity="0.15"/>
+  </svg>
+</header>
+
+<main>
+  <h2 class="section-title">Sessions</h2>
+  <div class="grid" id="video-grid"></div>
+
+  <section class="about">
+    <h2>About the channel</h2>
+    <p>Original ambient compositions built from field recordings and analog synthesis, tuned to 432Hz. Every session fades in gently, plays without interruptions, and fades out at the end — designed to let your mind settle. Best experienced with headphones or a quality speaker.</p>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Ambient Soundscapes ·
+    <a href="https://www.youtube.com/@ambntsnd" target="_blank" rel="noopener">YouTube</a></p>
+</footer>
+
+<script>
+  // ── Add new videos here ──────────────────────────────────────
+  // Just copy a block and change the id (from the YouTube URL:
+  // youtube.com/watch?v=THIS_PART), title, and description.
+  const videos = [
+    {
+      id: "ceekdJdtSJM",
+      title: "Rain Sounds for Sleep 🌧️ 3 Hours of Calm Ambient Music | 432Hz Deep Relaxation & Study",
+      description: "3 continuous hours of gentle rain and warm ambient tones, tuned to 432Hz. Perfect for deep sleep, meditation, or studying."
+    }
+  ];
+  // ─────────────────────────────────────────────────────────────
+
+  const grid = document.getElementById("video-grid");
+
+  videos.forEach(v => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="player" data-id="${v.id}" role="button" tabindex="0" aria-label="Play: ${v.title.replace(/"/g, "&quot;")}">
+        <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy">
+        <div class="play-badge"><span>
+          <svg width="22" height="26" viewBox="0 0 22 26"><path d="M0 0 L22 13 L0 26 Z" fill="#e8dcc0"/></svg>
+        </span></div>
+      </div>
+      <div class="card-body">
+        <h3>${v.title}</h3>
+        <p>${v.description}</p>
+        <a class="yt-link" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Watch on YouTube →</a>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Thumbnails load instantly; the YouTube player is only embedded on click.
+  function play(el) {
+    const id = el.dataset.id;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    el.replaceChildren(iframe);
+  }
+  grid.addEventListener("click", e => {
+    const p = e.target.closest(".player");
+    if (p && !p.querySelector("iframe")) play(p);
+  });
+  grid.addEventListener("keydown", e => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const p = e.target.closest(".player");
+    if (p && !p.querySelector("iframe")) { e.preventDefault(); play(p); }
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
